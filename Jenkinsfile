@@ -147,6 +147,12 @@ pipeline {
         sh 'docker-compose up -d'
       }
     }
+    stage('List Files') {
+    steps {
+        sh 'ls -R /var/jenkins_home/workspace/ci-cd'
+     }
+    }
+
     stage('Deploy to Kubernetes') {
       steps {
             sh 'kubectl apply -f k8s-deployment.yml'        
