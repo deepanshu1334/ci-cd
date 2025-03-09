@@ -127,6 +127,13 @@
 pipeline {
   agent any
   stages {
+
+    stage('Check Branch') {
+    steps {
+        sh 'git branch'
+    }
+}
+
     stage('Build') {
       steps {
         sh 'docker-compose build'
@@ -147,15 +154,22 @@ pipeline {
         sh 'docker-compose up -d'
       }
     }
-    stage('List Files') {
-    steps {
-        sh 'ls -R /var/jenkins_home/workspace/ci-cd'
-     }
-    }
+    
+    // stage('List Files') {
+    // steps {
+    //     sh 'ls -R /var/jenkins_home/workspace/ci-cd'
+    //  }
+    // }
 
     stage('Deploy to Kubernetes') {
       steps {
-            sh 'kubectl apply -f k8s-deployment.yml'        
+        sh '''
+ls -l /var/jenkins_home/workspace/ci-cd/
+cat /var/jenkins_home/workspace/ci-cd/k8s-deployment.yaml
+kubectl apply -f /var/jenkins_home/workspace/ci-cd/k8s-deployment.yaml
+'''
+           sh 'kubectl apply -f k8s-deployment.yaml'
+    
       }
     }
   }
