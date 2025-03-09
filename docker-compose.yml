@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web:
+    build: . #build form current dicrecory using docker iamge
+    ports:
+      - "80:80"
+
+#first it build image using docker file and then it create contianer using docker compose
+#using ewb service it will create contiaenr one contianer
+
+
+
+
+
+
+
+
+
